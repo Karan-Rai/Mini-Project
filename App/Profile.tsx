@@ -1,129 +1,215 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  Image,
   TextInput,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {AuthContext} from './context';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-//import {add} from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
+import * as ImagePicker from 'react-native-image-picker';
+import {saveProfileDetails} from './Redux/action';
 
-export const Profile = ({navigation}) => {
-  const {signOut} = React.useContext(AuthContext);
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [locality, setLocality] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [pin, setPin] = useState('');
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      phone: '',
+      email: '',
+      locality: '',
+      city: '',
+      state: '',
+      pin: '',
+      photo: '',
+    };
+  }
+  selectFile = () => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose file from Custom Option',
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
-  const phoneNumber = (value: string) =>
-    value && !/^(0|[1-9][0-9]{9})$/i.test(value)
-      ? 'Invalid phone number, must be 10 digits'
-      : undefined;
+    ImagePicker.launchImageLibrary(options, res => {
+      console.log('Response = ', res);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={{fontSize: 30, color: '#616A6B'}}>Fill Your Details</Text>
-      </View>
-      <View style={styles.body}>
-        <View style={styles.action}>
-          <FontAwesome name="user" size={30} />
-          <TextInput
-            placeholder="Enter your name"
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="phone" size={30} />
-          <TextInput
-            placeholder="Enter your mobile no."
-            style={styles.input}
-            keyboardType="number-pad"
-            value={phone}
-            onChangeText={setPhone}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="address-book" size={30} />
-          <TextInput
-            placeholder="Enter your address"
-            style={styles.input}
-            value={address}
-            onChangeText={setAddress}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="road" size={30} />
-          <TextInput
-            placeholder="Enter your locality"
-            style={styles.input}
-            value={locality}
-            onChangeText={setLocality}
-          />
-        </View>
-        <View style={styles.action}>
-          <Icon name="location" size={30} />
-          <TextInput
-            placeholder="Enter your city"
-            style={styles.input}
-            value={city}
-            onChangeText={setCity}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="location-arrow" size={30} />
-          <TextInput
-            placeholder="Enter your Pin Code"
-            style={styles.input}
-            keyboardType="number-pad"
-            value={pin}
-            onChangeText={setPin}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="bookmark" size={30} />
-          <TextInput
-            placeholder="Enter your Pin Code"
-            style={styles.input}
-            keyboardType="number-pad"
-            value={pin}
-            onChangeText={setPin}
-          />
-        </View>
-        <View style={styles.button}>
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={{fontSize: 20, color: '#17202A'}}>Submit</Text>
+      if (res.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (res.errorMessage) {
+        console.log('ImagePicker Error: ', res.errorMessage);
+      } else {
+        let source = res;
+        this.setState({
+          photo: source,
+        });
+      }
+    });
+  };
+
+  onSubmit = () => {
+    var profileDetails = {};
+    profileDetails.name = this.state.name;
+    profileDetails.phone = this.state.phone;
+    profileDetails.email = this.state.email;
+    profileDetails.locality = this.state.locality;
+    profileDetails.city = this.state.city;
+    profileDetails.state = this.state.state;
+    profileDetails.pin = this.state.pin;
+    profileDetails.photo = this.state.photo;
+    this.props.reduxSaveProfileDetail(profileDetails);
+    this.props.navigation.navigate('Home');
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <TouchableOpacity
+            style={styles.imageButton}
+            onPress={this.selectFile}>
+            {this.state.photo === null ? (
+              <Image
+                source={require('/Users/karry/ReacNativeApp/App/image/profile.jpg')}
+                style={styles.imageBox}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                source={{uri: this.state.photo.uri}}
+                style={styles.imageBox}
+                resizeMode="cover"
+              />
+            )}
           </TouchableOpacity>
         </View>
-      </View>
-    </View>
-  );
-};
+        <View style={styles.body}>
+          <ScrollView>
+            <View style={styles.action}>
+              <TextInput
+                placeholder="Full Name"
+                placeholderTextColor="#283747"
+                style={styles.input}
+                returnKeyType="next"
+                onChangeText={name => {
+                  this.setState({name: name}, () => {});
+                }}
+              />
+            </View>
 
+            <View style={styles.action}>
+              <TextInput
+                placeholder="Mobile No."
+                placeholderTextColor="#283747"
+                style={styles.input}
+                keyboardType="phone-pad"
+                maxLength={10}
+                returnKeyType="next"
+                onChangeText={phone => {
+                  this.setState({phone: phone}, () => {});
+                }}
+              />
+            </View>
+
+            <View style={styles.action}>
+              <TextInput
+                placeholder="Email address"
+                placeholderTextColor="#283747"
+                keyboardType="email-address"
+                style={styles.input}
+                returnKeyType="next"
+                onChangeText={email => {
+                  this.setState({email: email}, () => {});
+                }}
+              />
+            </View>
+
+            <View style={styles.action}>
+              <TextInput
+                placeholder="Locality"
+                placeholderTextColor="#283747"
+                style={styles.input}
+                returnKeyType="next"
+                onChangeText={locality => {
+                  this.setState({locality: locality}, () => {});
+                }}
+              />
+            </View>
+            <View style={styles.action}>
+              <TextInput
+                placeholder="City"
+                placeholderTextColor="#283747"
+                style={styles.input}
+                returnKeyType="next"
+                onChangeText={city => {
+                  this.setState({city: city}, () => {});
+                }}
+              />
+            </View>
+            <View style={styles.action}>
+              <TextInput
+                placeholder="State"
+                placeholderTextColor="#283747"
+                style={styles.input}
+                returnKeyType="next"
+                onChangeText={state => {
+                  this.setState({state: state}, () => {});
+                }}
+              />
+            </View>
+            <View style={styles.action}>
+              <TextInput
+                placeholder="Pin Code"
+                placeholderTextColor="#283747"
+                style={styles.input}
+                keyboardType="number-pad"
+                returnKeyType="done"
+                onChangeText={pin => {
+                  this.setState({pin: pin}, () => {});
+                }}
+              />
+            </View>
+
+            <View style={styles.button}>
+              <TouchableOpacity
+                style={styles.submitButton}
+                disabled={
+                  (this.state.name &&
+                    this.state.phone &&
+                    this.state.photo &&
+                    this.state.email &&
+                    this.state.city) == ''
+                    ? true
+                    : false
+                }
+                onPress={this.onSubmit}>
+                <Text style={{fontSize: 20, color: '#fff'}}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    );
+  }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#2980B9',
+  },
 
-    backgroundColor: '#3498DB',
-  },
-  header: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   body: {
     flex: 3,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    backgroundColor: '#D0D3D4',
     paddingHorizontal: 20,
     paddingVertical: 30,
     flexDirection: 'column',
@@ -133,30 +219,54 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
+
+    marginHorizontal: 20,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   input: {
     flex: 1,
-    marginTop: -12,
-    marginHorizontal: 20,
+    paddingVertical: 5,
     paddingHorizontal: 20,
-    color: '#05375a',
+    backgroundColor: '#fff',
   },
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   submitButton: {
     marginTop: 30,
-    backgroundColor: '#3498DB',
-    width: 150,
+    backgroundColor: '#2980B9',
+    width: 100,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
   },
+  imageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageBox: {
+    width: 140,
+    height: 140,
+    borderRadius: 100,
+    backgroundColor: '#fff',
+  },
+  imageButton: {
+    borderColor: 'black',
+    borderWidth: 1,
+    width: 140,
+    height: 140,
+    borderRadius: 100,
+  },
 });
-
-export default Profile;
+const mapDispatchToProps = dispatch => {
+  return {
+    reduxSaveProfileDetail: profileDetail =>
+      dispatch(saveProfileDetails(profileDetail)),
+  };
+};
+export default connect(null, mapDispatchToProps)(Profile);

@@ -4,12 +4,11 @@ import {StyleSheet, View, Text, Image, StatusBar} from 'react-native';
 const Splash = () => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#4f6d7a" barStyle="light-content" />
+      <StatusBar backgroundColor="#283747" barStyle="light-content" />
       <Image
         style={styles.imageContainer}
         source={require('/Users/karry/ReacNativeApp/App/image/react.png')}
       />
-      <Text style={styles.text}>Mini Project on React Native</Text>
     </View>
   );
 };
@@ -17,7 +16,7 @@ const Splash = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4f6d7a',
+    backgroundColor: '#283747',
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -6,9 +6,11 @@ const {width, height} = Dimensions.get('window');
 const HomeDetail: React.FC<HomeDetailprops> = ({item}) => {
   return (
     <View style={styles.cardView}>
-      <Text style={styles.id}>
-        {item.id} {item.login}
-      </Text>
+      <View style={styles.titleheader}>
+        <Text style={styles.id}>{item.id}</Text>
+        <Text style={styles.title}>{item.login}</Text>
+      </View>
+
       <Image style={styles.image} source={{uri: item.avatar_url}} />
     </View>
   );
@@ -16,13 +18,17 @@ const HomeDetail: React.FC<HomeDetailprops> = ({item}) => {
 
 const styles = StyleSheet.create({
   cardView: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     margin: width * 0.03,
     borderRadius: width * 0.05,
     shadowColor: '#000',
     shadowOffset: {width: 0.5, height: 0.5},
     shadowOpacity: 0.5,
     shadowRadius: 3,
+  },
+  titleheader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   id: {
     marginHorizontal: width * 0.05,
@@ -33,28 +39,18 @@ const styles = StyleSheet.create({
   },
   title: {
     marginHorizontal: width * 0.05,
-    marginVertical: width * 0.03,
-    color: 'black',
+    marginVertical: width * 0.02,
+    color: '#2471A3',
     fontSize: 20,
     fontWeight: 'bold',
   },
-  description: {
-    marginVertical: width * 0.05,
-    marginHorizontal: width * 0.02,
-    color: 'gray',
-    fontSize: 18,
-  },
+
   image: {
     height: height / 4,
+    borderRadius: 10,
     marginLeft: width * 0.05,
     marginRight: width * 0.05,
     marginVertical: height * 0.02,
-  },
-  author: {
-    marginBottom: width * 0.0,
-    marginHorizontal: width * 0.05,
-    fontSize: 15,
-    color: 'gray',
   },
 });
 

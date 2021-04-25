@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import HomeDetail from '../App/components/HomeDetail';
 import axios from 'axios';
 
@@ -26,7 +26,7 @@ export const Home = ({navigation}) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={details}
         keyExtractor={(item, index) => 'key' + index}
@@ -40,16 +40,7 @@ export const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 10,
-    borderRadius: 5,
+    backgroundColor: '#D0D3D4',
   },
 });
-
 export default Home;

@@ -12,13 +12,20 @@ import Splash from './Splash';
 import {DrawerContent} from './DrawerContent';
 import {AuthContext} from './context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Logout from './Logout';
+
 import ProfileDetail from './ProfileDetail';
-import {Alert} from 'react-native';
 
 const AuthStack = createStackNavigator();
+const Tabs = createMaterialBottomTabNavigator();
+const HomeStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+const ProfileDetailStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const RootStack = createStackNavigator();
+
 const AuthStackScreen = () => (
   <AuthStack.Navigator
+    headerMode="none"
     screenOptions={{
       headerStyle: {
         backgroundColor: '#3498DB',
@@ -28,22 +35,15 @@ const AuthStackScreen = () => (
         fontWeight: 'bold',
       },
     }}>
-    <AuthStack.Screen
-      name="SignInScreen"
-      component={SignInScreen}
-      options={{title: 'Sign In'}}
-    />
+    <AuthStack.Screen name="SignInScreen" component={SignInScreen} />
   </AuthStack.Navigator>
 );
-
-const Tabs = createMaterialBottomTabNavigator();
-const HomeStack = createStackNavigator();
 
 const HomeStackScreen = ({navigation}) => (
   <HomeStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#3498DB',
+        backgroundColor: '#2980B9',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -59,7 +59,7 @@ const HomeStackScreen = ({navigation}) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#3498DB"
+            backgroundColor="#2980B9"
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -67,9 +67,9 @@ const HomeStackScreen = ({navigation}) => (
   </HomeStack.Navigator>
 );
 
-const ProfileStack = createStackNavigator();
 const ProfileStackScreen = ({navigation}) => (
   <ProfileStack.Navigator
+    headerMode="none"
     screenOptions={{
       headerStyle: {
         backgroundColor: '#3498DB',
@@ -84,11 +84,18 @@ const ProfileStackScreen = ({navigation}) => (
       component={Profile}
       options={{
         title: 'Profile Screen',
+      }}
+    />
+    <ProfileDetailStack.Screen
+      name="ProfileDetail"
+      component={ProfileDetail}
+      options={{
+        title: 'Profile Detail',
         headerLeft: () => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#3498DB"
+            backgroundColor="#2980B9"
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -96,12 +103,11 @@ const ProfileStackScreen = ({navigation}) => (
   </ProfileStack.Navigator>
 );
 
-const ProfileDetailStack = createStackNavigator();
 const ProfileDetailStackScreen = ({navigation}) => (
   <ProfileDetailStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#3498DB',
+        backgroundColor: '#2980B9',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -112,12 +118,12 @@ const ProfileDetailStackScreen = ({navigation}) => (
       name="ProfileDetail"
       component={ProfileDetail}
       options={{
-        title: 'Profile Detail Screen',
+        title: 'Profile Detail',
         headerLeft: () => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#3498DB"
+            backgroundColor="#2980B9"
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -132,18 +138,18 @@ const TabsScreen = () => (
       component={HomeStackScreen}
       options={{
         tabBarLabel: 'Home',
-        tabBarColor: '#3498DB',
+        tabBarColor: '#2980B9',
         tabBarIcon: ({color}) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
       }}
     />
     <Tabs.Screen
-      name="Profile Detail"
+      name="ProfileDetail"
       component={ProfileDetailStackScreen}
       options={{
         tabBarLabel: 'Profile',
-        tabBarColor: '#3498DB',
+        tabBarColor: '#2980B9',
         tabBarIcon: ({color}) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
@@ -151,45 +157,16 @@ const TabsScreen = () => (
     />
   </Tabs.Navigator>
 );
-const LogoutStack = createStackNavigator();
-const LogoutStackScreen = ({navigation}) => (
-  <LogoutStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#3498DB',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }}>
-    <LogoutStack.Screen
-      name="Logout"
-      component={Logout}
-      options={{
-        title: 'Logout Screen',
-        headerLeft: () => (
-          <Icon.Button
-            name="ios-menu"
-            size={25}
-            backgroundColor="#3498DB"
-            onPress={() => navigation.openDrawer()}></Icon.Button>
-        ),
-      }}
-    />
-  </LogoutStack.Navigator>
-);
-const Drawer = createDrawerNavigator();
+
 const DrawerScreen = () => (
   <Drawer.Navigator
-    initialRouteName="Home"
+    initialRouteName="Profile"
     drawerContent={props => <DrawerContent {...props} />}>
     <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Profile" component={ProfileStackScreen} />
   </Drawer.Navigator>
 );
 
-const RootStack = createStackNavigator();
 const RootStackScreen = ({userToken}) => (
   <RootStack.Navigator headerMode="none">
     {userToken ? (
@@ -213,9 +190,6 @@ const RootStackScreen = ({userToken}) => (
 );
 
 const Routes = () => {
-  //const [isLoading, setIsLoading] = React.useState(true);
-  //const [userToken, setUserToken] = React.useState(null);
-
   const initialLoginState = {
     isLoading: true,
     username: null,
@@ -253,26 +227,19 @@ const Routes = () => {
 
   const authContext = React.useMemo(() => {
     return {
-      signIn: async (username, password) => {
-        //setIsLoading(false);
-        // setUserToken('asdf');
-        let userToken;
-        userToken: null;
-        if (username == 'user' && password == '123456') {
-          try {
-            userToken = 'asdf';
-            await AsyncStorage.setItem('userToken', userToken);
-          } catch (e) {
-            console.log(e);
-          }
-        } else {
-          Alert.alert('Enter correct Username & password');
+      signIn: async foundUser => {
+        const userToken = String(foundUser[0].userToken);
+        const userName = foundUser[0].username;
+
+        try {
+          await AsyncStorage.setItem('userToken', userToken);
+        } catch (e) {
+          console.log(e);
         }
-        dispatch({type: 'LOGIN', id: username, token: userToken});
+
+        dispatch({type: 'LOGIN', id: userName, token: userToken});
       },
       signOut: async () => {
-        //setIsLoading(false);
-        //setUserToken(null);
         try {
           await AsyncStorage.removeItem('userToken');
         } catch (e) {
@@ -285,7 +252,6 @@ const Routes = () => {
 
   React.useEffect(() => {
     setTimeout(async () => {
-      //setIsLoading(false);
       let userToken;
       userToken: null;
 
