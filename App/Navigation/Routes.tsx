@@ -5,15 +5,15 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import SignInScreen from './SignInScreen';
-import Profile from './Profile';
-import Home from './Home';
-import Splash from './Splash';
+import SignInScreen from '../Screens/SignIn/SignInScreen';
+import Profile from '../Screens/Profile/Profile';
+import Home from '../Screens/Home/Home';
+import Splash from '../Screens/Splash/Splash';
 import {DrawerContent} from './DrawerContent';
-import {AuthContext} from './context';
+import {AuthContext} from '../components/context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import ProfileDetail from './ProfileDetail';
+import ProfileDetail from '../Screens/ProfileDetail/ProfileDetail';
 
 const AuthStack = createStackNavigator();
 const Tabs = createMaterialBottomTabNavigator();

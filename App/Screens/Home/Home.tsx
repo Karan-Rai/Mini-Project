@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
-import HomeDetail from '../App/components/HomeDetail';
+import {View, FlatList} from 'react-native';
+import HomeDetail from './HomeDetail';
 import axios from 'axios';
+import styles from './style';
 
 export const Home = ({navigation}) => {
   const [details, setDetails] = useState([]);
@@ -38,9 +39,4 @@ export const Home = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#D0D3D4',
-  },
-});
 export default Home;

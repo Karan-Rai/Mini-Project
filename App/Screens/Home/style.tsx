@@ -1,22 +1,10 @@
-import React from 'react';
-
-import {StyleSheet, View, Text, Image, Dimensions} from 'react-native';
-interface HomeDetailprops {}
+import {StyleSheet, Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
-const HomeDetail: React.FC<HomeDetailprops> = ({item}) => {
-  return (
-    <View style={styles.cardView}>
-      <View style={styles.titleheader}>
-        <Text style={styles.id}>{item.id}</Text>
-        <Text style={styles.title}>{item.login}</Text>
-      </View>
-
-      <Image style={styles.image} source={{uri: item.avatar_url}} />
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#D0D3D4',
+  },
   cardView: {
     backgroundColor: '#fff',
     margin: width * 0.03,
@@ -54,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeDetail;
+export default styles;

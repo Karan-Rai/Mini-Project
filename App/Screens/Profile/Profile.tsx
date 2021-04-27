@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   TextInput,
   ScrollView,
@@ -10,7 +9,9 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as ImagePicker from 'react-native-image-picker';
-import {saveProfileDetails} from './Redux/action';
+import {saveProfileDetails} from '../../Redux/action';
+import styles from './style';
+import Input from '../../components/TextInput';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -79,7 +80,7 @@ class Profile extends React.Component {
             onPress={this.selectFile}>
             {this.state.photo === null ? (
               <Image
-                source={require('/Users/karry/ReacNativeApp/App/image/profile.jpg')}
+                source={require('/Users/karry/ReacNativeApp/App/components/image/profile.jpg')}
                 style={styles.imageBox}
                 resizeMode="cover"
               />
@@ -95,11 +96,8 @@ class Profile extends React.Component {
         <View style={styles.body}>
           <ScrollView>
             <View style={styles.action}>
-              <TextInput
+              <Input
                 placeholder="Full Name"
-                placeholderTextColor="#283747"
-                style={styles.input}
-                returnKeyType="next"
                 onChangeText={name => {
                   this.setState({name: name}, () => {});
                 }}
@@ -107,13 +105,10 @@ class Profile extends React.Component {
             </View>
 
             <View style={styles.action}>
-              <TextInput
-                placeholder="Mobile No."
-                placeholderTextColor="#283747"
-                style={styles.input}
+              <Input
+                placeholder="Phone No."
                 keyboardType="phone-pad"
                 maxLength={10}
-                returnKeyType="next"
                 onChangeText={phone => {
                   this.setState({phone: phone}, () => {});
                 }}
@@ -134,45 +129,33 @@ class Profile extends React.Component {
             </View>
 
             <View style={styles.action}>
-              <TextInput
+              <Input
                 placeholder="Locality"
-                placeholderTextColor="#283747"
-                style={styles.input}
-                returnKeyType="next"
                 onChangeText={locality => {
                   this.setState({locality: locality}, () => {});
                 }}
               />
             </View>
             <View style={styles.action}>
-              <TextInput
+              <Input
                 placeholder="City"
-                placeholderTextColor="#283747"
-                style={styles.input}
-                returnKeyType="next"
                 onChangeText={city => {
                   this.setState({city: city}, () => {});
                 }}
               />
             </View>
             <View style={styles.action}>
-              <TextInput
+              <Input
                 placeholder="State"
-                placeholderTextColor="#283747"
-                style={styles.input}
-                returnKeyType="next"
                 onChangeText={state => {
                   this.setState({state: state}, () => {});
                 }}
               />
             </View>
             <View style={styles.action}>
-              <TextInput
-                placeholder="Pin Code"
-                placeholderTextColor="#283747"
-                style={styles.input}
+              <Input
+                placeholder="Pin"
                 keyboardType="number-pad"
-                returnKeyType="done"
                 onChangeText={pin => {
                   this.setState({pin: pin}, () => {});
                 }}
@@ -201,68 +184,6 @@ class Profile extends React.Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#2980B9',
-  },
-
-  body: {
-    flex: 3,
-    backgroundColor: '#D0D3D4',
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    flexDirection: 'column',
-  },
-  dropdown: {
-    marginHorizontal: 50,
-  },
-  action: {
-    flexDirection: 'row',
-
-    marginHorizontal: 20,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  submitButton: {
-    marginTop: 30,
-    backgroundColor: '#2980B9',
-    width: 100,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-  },
-  imageContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  imageBox: {
-    width: 140,
-    height: 140,
-    borderRadius: 100,
-    backgroundColor: '#fff',
-  },
-  imageButton: {
-    borderColor: 'black',
-    borderWidth: 1,
-    width: 140,
-    height: 140,
-    borderRadius: 100,
-  },
-});
 const mapDispatchToProps = dispatch => {
   return {
     reduxSaveProfileDetail: profileDetail =>
