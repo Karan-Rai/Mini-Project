@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Text, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet} from 'react-native';
 
 const Input = ({placeholder, keyboardType, maxLength, onChangeText}) => {
   return (

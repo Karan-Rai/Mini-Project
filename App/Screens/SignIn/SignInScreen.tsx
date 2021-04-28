@@ -15,7 +15,8 @@ import {AuthContext} from '../../components/context';
 import Users from '../../components/Users';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './style';
-
+import Button from '../../components/Button';
+import {TEXT} from '../../components/String';
 const SignInScreen = ({navigation}) => {
   const {signIn} = React.useContext(AuthContext);
 
@@ -95,15 +96,7 @@ const SignInScreen = ({navigation}) => {
               style={styles.image}
               source={require('/Users/karry/ReacNativeApp/App/components/image/react.png')}
             />
-            <Text
-              style={{
-                fontSize: 20,
-                color: '#fff',
-                fontWeight: 'bold',
-                paddingBottom: 20,
-              }}>
-              Welcome to Sign In Screen
-            </Text>
+            <Text style={styles.welcomeText}>{TEXT.welcome}</Text>
           </View>
         </View>
 
@@ -115,7 +108,7 @@ const SignInScreen = ({navigation}) => {
               style={{paddingVertical: 20, paddingHorizontal: 20}}
             />
             <TextInput
-              placeholder="Email/ userName"
+              placeholder={TEXT.username}
               placeholderTextColor="#283747"
               style={styles.input}
               onChangeText={val => textInputChange(val)}
@@ -123,9 +116,7 @@ const SignInScreen = ({navigation}) => {
           </View>
           {data.isValidUser ? null : (
             <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>
-                Username must be 4 characters long.
-              </Text>
+              <Text style={styles.errorMsg}>{TEXT.usernameError}</Text>
             </Animatable.View>
           )}
           <View style={styles.action}>
@@ -135,7 +126,7 @@ const SignInScreen = ({navigation}) => {
               style={{paddingVertical: 20, paddingHorizontal: 20}}
             />
             <TextInput
-              placeholder="Password"
+              placeholder={TEXT.password}
               placeholderTextColor="#283747"
               style={styles.input}
               secureTextEntry
@@ -145,9 +136,7 @@ const SignInScreen = ({navigation}) => {
           </View>
           {data.isValidPassword ? null : (
             <Animatable.View animation="fadeInLeft" duration={500}>
-              <Text style={styles.errorMsg}>
-                Password must be 8 characters long.
-              </Text>
+              <Text style={styles.errorMsg}>{TEXT.passwordError}</Text>
             </Animatable.View>
           )}
           <View style={styles.checkboxContainer}>
@@ -157,17 +146,14 @@ const SignInScreen = ({navigation}) => {
                 setChecked(!checked);
               }}
             />
-            <Text style={styles.label}>Keep me signed in</Text>
+            <Text style={styles.label}>{TEXT.rememberMe}</Text>
           </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={() => {
-                loginHandle(data.username, data.password);
-              }}>
-              <Text style={{fontSize: 20, color: '#fff'}}>Sign In</Text>
-            </TouchableOpacity>
-          </View>
+          <Button
+            title="Sign In"
+            onPress={() => {
+              loginHandle(data.username, data.password);
+            }}
+          />
         </View>
       </View>
     </ScrollView>

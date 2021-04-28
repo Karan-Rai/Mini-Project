@@ -4,7 +4,6 @@ import {createStackNavigator, HeaderBackground} from '@react-navigation/stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import SignInScreen from '../Screens/SignIn/SignInScreen';
 import Profile from '../Screens/Profile/Profile';
 import Home from '../Screens/Home/Home';
@@ -12,7 +11,7 @@ import Splash from '../Screens/Splash/Splash';
 import {DrawerContent} from './DrawerContent';
 import {AuthContext} from '../components/context';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import {COLORS} from '../components/color';
 import ProfileDetail from '../Screens/ProfileDetail/ProfileDetail';
 
 const AuthStack = createStackNavigator();
@@ -43,7 +42,7 @@ const HomeStackScreen = ({navigation}) => (
   <HomeStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#2980B9',
+        backgroundColor: COLORS.primaryColor,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -59,7 +58,7 @@ const HomeStackScreen = ({navigation}) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#2980B9"
+            backgroundColor={COLORS.primaryColor}
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -72,7 +71,7 @@ const ProfileStackScreen = ({navigation}) => (
     headerMode="none"
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#3498DB',
+        backgroundColor: COLORS.primaryColor,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -95,7 +94,7 @@ const ProfileStackScreen = ({navigation}) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#2980B9"
+            backgroundColor={COLORS.primaryColor}
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -107,7 +106,7 @@ const ProfileDetailStackScreen = ({navigation}) => (
   <ProfileDetailStack.Navigator
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#2980B9',
+        backgroundColor: COLORS.primaryColor,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -123,7 +122,7 @@ const ProfileDetailStackScreen = ({navigation}) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#2980B9"
+            backgroundColor="COLORS.primaryColor"
             onPress={() => navigation.openDrawer()}></Icon.Button>
         ),
       }}
@@ -138,7 +137,7 @@ const TabsScreen = () => (
       component={HomeStackScreen}
       options={{
         tabBarLabel: 'Home',
-        tabBarColor: '#2980B9',
+        tabBarColor: COLORS.primaryColor,
         tabBarIcon: ({color}) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
@@ -149,7 +148,7 @@ const TabsScreen = () => (
       component={ProfileDetailStackScreen}
       options={{
         tabBarLabel: 'Profile',
-        tabBarColor: '#2980B9',
+        tabBarColor: COLORS.primaryColor,
         tabBarIcon: ({color}) => (
           <Icon name="ios-person" color={color} size={26} />
         ),

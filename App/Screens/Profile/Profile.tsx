@@ -12,6 +12,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import {saveProfileDetails} from '../../Redux/action';
 import styles from './style';
 import Input from '../../components/TextInput';
+import Button from '../../components/Button';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -162,22 +163,19 @@ class Profile extends React.Component {
               />
             </View>
 
-            <View style={styles.button}>
-              <TouchableOpacity
-                style={styles.submitButton}
-                disabled={
-                  (this.state.name &&
-                    this.state.phone &&
-                    this.state.photo &&
-                    this.state.email &&
-                    this.state.city) == ''
-                    ? true
-                    : false
-                }
-                onPress={this.onSubmit}>
-                <Text style={{fontSize: 20, color: '#fff'}}>Submit</Text>
-              </TouchableOpacity>
-            </View>
+            <Button
+              disabled={
+                (this.state.name &&
+                  this.state.phone &&
+                  this.state.photo &&
+                  this.state.email &&
+                  this.state.city) == ''
+                  ? true
+                  : false
+              }
+              onPress={this.onSubmit}
+              title="Submit"
+            />
           </ScrollView>
         </View>
       </View>

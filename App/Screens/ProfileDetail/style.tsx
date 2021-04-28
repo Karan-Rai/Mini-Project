@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../components/color';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2980B9',
+    backgroundColor: COLORS.primaryColor,
   },
   body: {
     flex: 3,
-    backgroundColor: '#D0D3D4',
+    backgroundColor: COLORS.bodyColor,
     paddingHorizontal: 20,
     paddingVertical: 30,
     flexDirection: 'column',

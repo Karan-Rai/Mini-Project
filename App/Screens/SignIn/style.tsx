@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../components/color';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2980B9',
+    backgroundColor: COLORS.primaryColor,
   },
   header: {
     flex: 1,
@@ -17,13 +18,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  welcomeText: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingBottom: 20,
+  },
   image: {
     height: 150,
     width: 150,
   },
   body: {
     flex: 3,
-    backgroundColor: '#D0D3D4',
+    backgroundColor: COLORS.bodyColor,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
@@ -57,18 +64,6 @@ const styles = StyleSheet.create({
   errorMsg: {
     color: '#FF0000',
     fontSize: 14,
-  },
-  button: {
-    alignItems: 'center',
-  },
-  submitButton: {
-    marginTop: 30,
-    backgroundColor: '#2980B9',
-    width: 150,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
   },
 });
 

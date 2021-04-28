@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../components/color';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2980B9',
+    backgroundColor: COLORS.primaryColor,
   },
 
   body: {
     flex: 3,
-    backgroundColor: '#D0D3D4',
+    backgroundColor: COLORS.bodyColor,
     paddingHorizontal: 20,
     paddingVertical: 30,
     flexDirection: 'column',
@@ -29,19 +30,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  submitButton: {
-    marginTop: 30,
-    backgroundColor: '#2980B9',
-    width: 100,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
   },
   imageContainer: {
     flex: 1,

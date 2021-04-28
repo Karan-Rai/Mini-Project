@@ -1,12 +1,13 @@
 import {StyleSheet, Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
+import {COLORS} from '../../components/color';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D0D3D4',
+    backgroundColor: COLORS.homeBackground,
   },
   cardView: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.homeCardColor,
     margin: width * 0.03,
     borderRadius: width * 0.05,
     shadowColor: '#000',
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   title: {
     marginHorizontal: width * 0.05,
     marginVertical: width * 0.02,
-    color: '#2471A3',
+    color: COLORS.homeTitle,
     fontSize: 20,
     fontWeight: 'bold',
   },
